@@ -14,8 +14,15 @@ conda create --name aic24 python=3.11
 ```
 !pip install ffmpeg-python pillow
 !git clone https://github.com/soCzech/TransNetV2.git
-%cd TransNetV2/inference
 ```
+**Lưu ý**: Sau khi install TransNetV2 bằng `git clone` thì chỉnh lại code chỗ này :
+
+```python
+sys.path.append('/home/dattruong/dat/AI/Competition/HCMAI/src/process_data/TransNetV2/inference')  ##lưu ý đổi path đến TransNetv2 (sẽ xuất hiện khi git clone transnetv2)
+```
+
+Thay bằng đường dẫn đến mục inference trong folder `TransNetV2`
+
 ## Run code 
 ```
 python keyframe_extract.py
