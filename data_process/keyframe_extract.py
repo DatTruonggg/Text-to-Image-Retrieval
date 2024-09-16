@@ -5,7 +5,7 @@ import os
 import cv2
 import ffmpeg
 
-sys.path.append('/home/dattruong/dat/AI/Competition/HCMAI/src/process_data/TransNetV2/inference') 
+sys.path.append('/home/dattruong/dat/AI/Competition/HCMAI/src/process_data/TransNetV2/inference')  ##lưu ý đổi path đến TransNetv2 (sẽ xuất hiện khi git clone transnetv2)
 from transnetv2 import TransNetV2
 
 class KeyframeExtractor:
