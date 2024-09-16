@@ -1,5 +1,9 @@
 # Extract Keyframe with TransNetV2
 
+**Chỉ cần 1 file code duy nhất thôi nhé !!!!**
+
+Main path: `data_process/keyframe_extract.py`
+
 ## Set up environment
 
 ``` cmd
