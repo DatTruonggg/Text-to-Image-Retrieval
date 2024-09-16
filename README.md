@@ -17,7 +17,8 @@ conda create --name aic24 python=3.11
 python keyframe_extract.py
 ```
 ## Note
-```
+**Lưu ý code chỗ này nhe**
+``` python
 if __name__ == "__main__":
     vids_paths = sorted(glob.glob('/home/dattruong/dat/AI/Competition/HCMAI/Data/Videos_L12/*.mp4')) #Đổi tên Video file (ví dụ chạy Video_L12 thì đổi thành Video_L12 (tên folder))  
     frames_path = '/home/dattruong/dat/AI/Competition/HCMAI/Data/Keyframe/L12' # Đổi tên output folder cho giống với tên Video
