@@ -26,6 +26,6 @@ if __name__ == "__main__":
         extractor.process_video()
 ```
 
-** Nhớ đổi tên các folder Video cho khớp với Video mình đang chạy. **
+**Nhớ đổi tên các folder Video cho khớp với Video mình đang chạy.**
 
 Ví dụ: Đạt extract frame từ Video_L20 chẳng hạn, thì sẽ đổi đường dẫn là `'/home/dattruong/dat/AI/Competition/HCMAI/Data/Videos_L20/*.mp4'` và `'/home/dattruong/dat/AI/Competition/HCMAI/Data/Keyframe/L20'`
