@@ -3,7 +3,7 @@
 ## Set up environment
 
 ``` cmd
-conda create --name myenv python=3.11
+conda create --name aic24 python=3.11
 ```
 ## Install package 
 
