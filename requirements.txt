@@ -1,0 +1,15 @@
+pandas 
+numpy
+matplotlib 
+python-dotenv 
+googletrans==3.1.0a0 
+open_clip_torch
+clip
+faiss-cpu==1.8.0
+transformers
+flask
+flask-cors
+tqdm
+opencv-python
+scikit-learn
+rapidfuzz
