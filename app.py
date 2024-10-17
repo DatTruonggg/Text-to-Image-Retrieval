@@ -77,7 +77,7 @@ def get_related_ignore(ignore_index):
   return total_ignore_index
 
 # Run Flask app
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 CORS(app)
 
 
