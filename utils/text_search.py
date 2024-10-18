@@ -126,24 +126,20 @@ class TextSearch:
 
         return scores.flatten(), idx_image, infos_query, image_paths
      
-    # def show_images(self, image_paths): ## Show demo in local host
-    #     fig = plt.figure(figsize=(25, 20))
-    #     columns = int(math.sqrt(len(image_paths)))
-    #     rows = int(np.ceil(len(image_paths)/columns))
+    def image_search(self, id_query, k, storage):
+        query_feats = self.index_clip.reconstruct(id_query).reshape(1,-1)
 
-    #     for i in range(1, columns*rows + 1):
-    #         if i - 1 < len(image_paths):
-    #             img = plt.imread(image_paths[i - 1])
-    #             ax = fig.add_subplot(rows, columns, i)
-                
-    #             title_parts = image_paths[i - 1].split("/")[-2:]
-    #             title = " - ".join(title_parts).rsplit('.', 1)[0] 
-                
-    #             ax.set_title(title)
-    #             plt.imshow(img)
-    #             plt.axis("off")
+        scores, idx_image = self.index_clip.search(query_feats, k=k)
+        idx_image = idx_image.flatten()
 
-    #     plt.show()
+        if storage == "cloud": 
+            infos_query = list(map(self.json_path_cloud.get, list(idx_image)))
+        else: 
+            infos_query = list(map(self.json_path.get, list(idx_image)))        
+
+        image_paths = [info['image_path'] for info in infos_query]
+        return scores.flatten(), idx_image, infos_query, image_paths
+    
     def show_images(self, image_paths):  # Hiển thị demo trong localhost
         fig = plt.figure(figsize=(25, 20))
         columns = int(math.sqrt(len(image_paths)))

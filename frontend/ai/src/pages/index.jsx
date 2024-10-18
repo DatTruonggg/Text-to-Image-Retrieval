@@ -43,7 +43,7 @@ function index() {
   const [recTags, setRecTags] = useState([]);
   const [fullScreenImg, setFullScreenImg] = useState(null);
   const [queryHistory, setQueryHistory] = useState([]);
-  const [k, setK] = useState(500);
+  const [k, setK] = useState(200);
   const [selected, setSelected] = useState(queryHistory[0]);
   const [selectedFilter, setSelectedFilter] = useState({ name: "No Filter" });
   const [relatedObj, setRelatedObj] = useState({});
@@ -746,115 +746,103 @@ function index() {
               }}
               value={rangeFilter}
             ></input>
-            <div id="filter" className="flex items-center ">
-              <input
-                checked={filter}
-                onChange={(e) => {
-                  setFilter(e.target.checked);
-                }}
-                disabled={queryHistory.length === 0 && filter === false}
-                id="Filter"
-                type="checkbox"
-                className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 rounded hover:ring-slate-500 hover:ring-2"
-              />
-              <label
-                htmlFor="Filter"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="">Filter</span>
-              </label>
+            <div className="flex flex-col space-y-2"> {/* Thay đổi để sử dụng flex-col */}
+              <div className="flex items-center space-x-2"> {/* Hàng đầu tiên cho Filter, Ignore và Auto */}
+                <div id="filter" className="flex items-center">
+                  <input
+                    checked={filter}
+                    onChange={(e) => {
+                      setFilter(e.target.checked);
+                    }}
+                    disabled={queryHistory.length === 0 && filter === false}
+                    id="Filter"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 hover:ring-slate-500 hover:ring-2"
+                  />
+                  <label htmlFor="Filter" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span>Filter</span>
+                  </label>
+                </div>
+                
+                <div id="ignore" className="flex items-center">
+                  <input
+                    checked={ignore}
+                    onChange={(e) => {
+                      setIgnore(e.target.checked);
+                    }}
+                    id="Ignore"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 hover:ring-slate-500 hover:ring-2"
+                  />
+                  <label htmlFor="Ignore" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span>Ignore</span>
+                  </label>
+                </div>
+                
+                <div id="Auto" className="flex items-center">
+                  <input
+                    checked={autoIgnore}
+                    onChange={(e) => {
+                      setAutoIgnore(e.target.checked);
+                    }}
+                    id="AutoIgnore"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 hover:ring-slate-500 hover:ring-2"
+                  />
+                  <label htmlFor="AutoIgnore" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span>AutoIgnore</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2"> {/* Hàng thứ hai cho Clip, clipv2_l14, clipv2_h14 */}
+                <div id="clip" className="flex items-center">
+                  <input
+                    checked={clip}
+                    onChange={(e) => {
+                      setClip(e.target.checked);
+                    }}
+                    id="Clip"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 hover:ring-slate-500 hover:ring-2"
+                  />
+                  <label htmlFor="Clip" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span>Clip</span>
+                  </label>
+                </div>
+                
+                <div id="clipv2_l14" className="flex items-center text-orange-500">
+                  <input
+                    checked={clipv2_l14}
+                    onChange={(e) => {
+                      setClipv2L14(e.target.checked);
+                    }}
+                    id="clipv2_l14"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-orange-700/75 text-red-500 hover:ring-orange-300 hover:ring-2"
+                  />
+                  <label htmlFor="clipv2_l14" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span className="text-orange-400">Clipv2_L14</span>
+                  </label>
+                </div>
+                
+                <div id="clipv2_h14" className="flex items-center text-orange-500">
+                  <input
+                    checked={clipv2_h14}
+                    onChange={(e) => {
+                      setClipv2H14(e.target.checked);
+                    }}
+                    id="clipv2_h14"
+                    type="checkbox"
+                    className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-orange-700/75 text-red-500 hover:ring-orange-300 hover:ring-2"
+                  />
+                  <label htmlFor="clipv2_h14" className="cursor-pointer pl-0.5 text-slate-300">
+                    <span className="text-orange-400">Clipv2_H14</span>
+                  </label>
+                </div>
+              </div>
             </div>
-            <div id="ignore" className="flex items-center ">
-              <input
-                checked={ignore}
-                onChange={(e) => {
-                  setIgnore(e.target.checked);
-                }}
-                id="Ignore"
-                type="checkbox"
-                className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 rounded hover:ring-slate-500 hover:ring-2"
-              />
-              <label
-                htmlFor="Ignore"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="">Ignore</span>
-              </label>
-            </div>
-            <div id="Auto" className="flex items-center">
-              <input
-                checked={autoIgnore}
-                onChange={(e) => {
-                  setAutoIgnore(e.target.checked);
-                }}
-                id="AutoIgnore"
-                type="checkbox"
-                className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 rounded hover:ring-slate-500 hover:ring-2"
-              />
-              <label
-                htmlFor="AutoIgnore"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="">AutoI</span>
-              </label>
-            </div>
-            <div id="clip" className="flex items-center ">
-              <input
-                checked={clip}
-                onChange={(e) => {
-                  setClip(e.target.checked);
-                }}
-                id="Clip"
-                type="checkbox"
-                className="cursor-pointer rounded-md  duration-200 w-5 h-5 accent-slate-600 bg-gray-100 border-gray-300 rounded hover:ring-slate-500 hover:ring-2"
-              />
-              <label
-                htmlFor="Clip"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="">Clip</span>
-              </label>
-            </div>
-            <div
-              id="clipv2_l14"
-              className="flex items-center text-orange-500 rounded-md"
-            >
-              <input
-                checked={clipv2_l14}
-                onChange={(e) => {
-                  setClipv2L14(e.target.checked);
-                }}
-                id="clipv2_l14"
-                type="checkbox"
-                className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-orange-700/75 text-red-500 rounded hover:ring-orange-300 hover:ring-2"
-              />
-              <label
-                htmlFor="clipv2_l14"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="text-orange-400">v2</span>
-              </label>
-            </div>
-            <div
-              id="clipv2_h14"
-              className="flex items-center text-orange-500 rounded-md"
-            >
-              <input
-                checked={clipv2_h14}
-                onChange={(e) => {
-                  setClipv2H14(e.target.checked);
-                }}
-                id="clipv2_h14"
-                type="checkbox"
-                className="cursor-pointer rounded-md duration-200 w-5 h-5 accent-orange-700/75 text-red-500 rounded hover:ring-orange-300 hover:ring-2"
-              />
-              <label
-                htmlFor="clipv2_h14"
-                className="cursor-pointer pl-0.5 text-slate-300"
-              >
-                <span className="text-orange-400">v2</span>
-              </label>
-            </div>
+
             <div className="h-fit w-fit flex flex-col relative">
               <input
                 placeholder="Questions"

@@ -1,5 +1,5 @@
 //BACKEND
-export const web_url = "https://1e0e-35-229-64-73.ngrok-free.app";
+export const web_url = "https://9ac6-2405-4802-bffa-5430-b4d1-7106-16c6-3439.ngrok-free.app";
 
 //SOCKET | DB SERVER
 export const socket_url =

@@ -112,7 +112,6 @@ def text_search():
     clip = data['clip']
     clipv2_l14 = data['clipv2_l14']
     clipv2_h14 = data['clipv2_h14']
-
     text_query = data['textquery']
     range_filter = int(data['range_filter'])
     storage = data["storage"]
@@ -142,14 +141,19 @@ def text_search():
       index = np.intersect1d(index, SearchSpace[search_space_index])
     k = min(k, len(index))
 
-    if clip and clipv2_l14 and clipv2_h14:
+    if clip and clipv2_l14:
       model_type = 'both'
+    elif clipv2_l14 and clipv2_h14:
+      model_type = 'bothv2'      
+    elif clip and clipv2_h14:
+      model_type = 'bothv3'  
     elif clip:
        model_type = 'clip'
     elif clipv2_l14:
        model_type = 'clipv2_l14'
-    else: 
+    elif clipv2_h14:
        model_type = 'clipv2_h14'
+
 
     if data['filtervideo'] != 0:
       print('filter video')
@@ -161,13 +165,30 @@ def text_search():
         scores_clip, list_clip_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clip', storage = storage)
         scores_clipv2_l14, list_clipv2_l14_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clipv2_l14', storage = storage)
         scores_clipv2_h14, list_clipv2_h14_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clipv2_h14', storage = storage)
-        lst_scores, list_ids = merge_searching_results_by_addition([scores_clip, scores_clipv2_l14, scores_clipv2_h14],
-                                                                  [list_clip_ids, list_clipv2_l14_ids, list_clipv2_h14_ids])
+        lst_scores, list_ids = merge_searching_results_by_addition([scores_clip, scores_clipv2_l14],
+                                                                  [list_clip_ids, list_clipv2_l14_ids])
+        infos_query = list(map(CosineFaiss.id2img_fps.get, list(list_ids)))
+        list_image_paths = [info['image_path'] for info in infos_query]
+      elif  model_type == 'bothv2':
+        scores_clipv2_h14, list_clipv2_h14_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clipv2_h14', storage = storage)
+        scores_clipv2_l14, list_clipv2_l14_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clipv2_l14', storage = storage)
+        lst_scores, list_ids = merge_searching_results_by_addition([scores_clipv2_l14, scores_clipv2_h14],
+                                                                  [list_clipv2_l14_ids, list_clipv2_h14_ids])
+        infos_query = list(map(CosineFaiss.id2img_fps.get, list(list_ids)))
+        list_image_paths = [info['image_path'] for info in infos_query]
+      elif  model_type == 'bothv3':
+        scores_clipv2_h14, list_clipv2_h14_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clipv2_h14', storage = storage)
+        scores_clip, list_clip_ids, _, _ = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type='clip', storage = storage)
+        lst_scores, list_ids = merge_searching_results_by_addition([scores_clip, scores_clipv2_h14],
+                                                                  [list_clip_ids, list_clipv2_h14_ids])
         infos_query = list(map(CosineFaiss.id2img_fps.get, list(list_ids)))
         list_image_paths = [info['image_path'] for info in infos_query]
       else:
         lst_scores, list_ids, _, list_image_paths = CosineFaiss.text_search(text = text_query, index=index, top_k=k, model_type=model_type, storage = storage)
       data = group_result_by_video(lst_scores, list_ids, list_image_paths, KeyframesMapper)
+
+      
+    print("Received data:", data)
 
     return jsonify(data)
 
@@ -269,10 +290,8 @@ def get_video_shot():
     for shot_key in shots.keys():
       lst_keyframe_idxs = []
       for img_path in shots[shot_key]['lst_keyframe_paths']:
-        data_part, video_id, frame_id = img_path.replace('/data/KeyFrames/', '').replace('.webp', '').split('/')
-        key = f'{data_part}_{video_id}'.replace('_extra', '')
-        if 'extra' not in data_part:
-          frame_id = KeyframesMapper[key][str(int(frame_id))]
+        data_part, video_id, frame_id = img_path.replace('/KeyFrames/', '').split('/')
+        key = f'{data_part}_{video_id}'
         frame_id = int(frame_id)
         lst_keyframe_idxs.append(frame_id)
       shots[shot_key]['lst_idxs'] = shots[shot_key]['lst_keyframe_idxs']
