@@ -62,7 +62,7 @@ class TextSearch:
         self.clipv2_L14, _, _ = open_clip.create_model_and_transforms('ViT-L-14', device=self.__device, pretrained='datacomp_xl_s13b_b90k')
         self.clipv2_L14_tokenizer = open_clip.get_tokenizer('ViT-L-14')
 
-        self.translater = Translation()
+        #self.translater = GoogleTranslator()
 
         self.s3 = boto3.client('s3', region_name='ap-southeast-1')
         self.bucket_name = "bmeazy"
@@ -80,8 +80,8 @@ class TextSearch:
     #     return f'https://{self.bucket_name}.s3.ap-southeast-1.amazonaws.com/{image_path}'
     
     def text_search(self, text:str , index,  top_k:int, model_type:str, storage: str):
-        text = self.translater(text)
-        #text = GoogleTranslator(source='auto', target='en').translate(text)
+        #text = self.translater(text)
+        text = GoogleTranslator(source='auto', target='en').translate(text)
         ###### TEXT FEATURES EXTRACTING ######
         if model_type == 'clip':
             text = clip.tokenize([text]).to(self.__device)  
