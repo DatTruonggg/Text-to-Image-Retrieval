@@ -20,7 +20,7 @@ import boto3
 from deep_translator import GoogleTranslator
 
 load_dotenv()
-from utils.nlp_processing import Translation
+# from utils.nlp_processing import Translation
 from utils.combine_utils import merge_searching_results_by_addition
 from utils.ocr_retrieval_engine.ocr_retrieval import ocr_retrieval
 from utils.semantic_embed.speech_retrieval import speech_retrieval
