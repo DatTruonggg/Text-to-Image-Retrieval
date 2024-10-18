@@ -2,7 +2,7 @@ pandas
 numpy
 matplotlib 
 python-dotenv 
-googletrans==3.1.0a0 
+# googletrans==3.1.0a0 
 open_clip_torch
 clip
 faiss-cpu==1.8.0
@@ -13,3 +13,4 @@ tqdm
 opencv-python
 scikit-learn
 rapidfuzz
+deep_translator
